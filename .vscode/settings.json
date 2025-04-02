@@ -1,0 +1,12 @@
+{
+  "conventionalCommits.scopes": [
+    "General",
+    "Database",
+    "Users",
+    "Shifts",
+    "Products",
+    "Machines",
+    "Locations",
+    "WorkOrders"
+  ]
+}
