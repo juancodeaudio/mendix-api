@@ -17,9 +17,15 @@ export class User {
     @Column({ type: 'boolean', default: true })
     isActive: boolean;
 
-    @CreateDateColumn({ type: 'timestamp' })
+    @CreateDateColumn({
+        type: 'timestamptz',
+        default: () => 'CURRENT_TIMESTAMP'
+    })
     createdAt: Date;
 
-    @UpdateDateColumn({ type: 'timestamp' })
+    @UpdateDateColumn({
+        type: 'timestamptz',
+        default: () => 'CURRENT_TIMESTAMP'
+    })
     updatedAt: Date;
 }

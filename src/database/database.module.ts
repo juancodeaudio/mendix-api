@@ -18,6 +18,7 @@ import config from 'src/config';
           password: database.password,
           port: database.port,
           ssl: true,
+          synchronize: false,
           autoLoadEntities: true
         }
       },
