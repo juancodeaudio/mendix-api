@@ -6,7 +6,6 @@ import config from './config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { ShiftsModule } from './shifts/shifts.module';
 import { LocationsModule } from './locations/locations.module';
 import { MachinesModule } from './machines/machines.module';
 import { ProductsModule } from './products/products.module';
@@ -30,9 +29,8 @@ import { DatabaseModule } from './database/database.module';
      })
     }),
     UsersModule,
-    ShiftsModule,
     LocationsModule,
-    // MachinesModule,
+    MachinesModule,
     // ProductsModule,
     // WorkOrdersModule,
     DatabaseModule
