@@ -4,27 +4,31 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 
-import { Machine } from './machine.entity';
+import { Location } from './location.entity';
+import { MachineStatus } from './machine-status.entity';
 
 @Entity()
-export class Location {
+export class Machine {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'varchar', length: 100 })
   name: string;
 
-  @Column({ type: 'varchar', length: 255 })
-  description: string;
+  @Column({ type: 'varchar', length: 100 })
+  type: string;
 
   @Column({ type: 'varchar', length: 100 })
-  parentLocation: string;
+  levelId: string;
+  
+  @ManyToOne(() => MachineStatus, (status) => status.machine)
+  machineStatus: MachineStatus;
 
-  @OneToMany(() => Machine, (machine) => machine.location)
-  machine: Machine[];
+  @ManyToOne(() => Location, (location) => location.machine)
+  location: Location;
 
   @CreateDateColumn({
     type: 'timestamptz',

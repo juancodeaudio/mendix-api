@@ -16,7 +16,8 @@ export class LocationsService {
 
   async findOne(id: number) {
     const location = await this.locationRepo.findOne({
-      where: { id }
+      where: { id },
+      relations: ['machines'],
     });
     if (!location) {
       throw new NotFoundException(`Location #${id} not found`);

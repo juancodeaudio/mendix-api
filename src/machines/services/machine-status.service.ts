@@ -15,7 +15,10 @@ export class MachineStatusService {
   }
 
   async findOne(id: number) {
-    const status = await this.machineStatusRepo.findOneBy({ id });
+    const status = await this.machineStatusRepo.findOne({
+      where: { id },
+      relations: ['machines'],
+    });
     if (!status) {
       throw new NotFoundException(`Machine status #${id} not found`);
     }

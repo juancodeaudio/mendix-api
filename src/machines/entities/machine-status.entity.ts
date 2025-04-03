@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+
+import { Machine } from './machine.entity';
 
 @Entity()
 export class MachineStatus {
@@ -13,6 +16,9 @@ export class MachineStatus {
 
   @Column({ type: 'varchar', length: 100, unique: true })
   name: string;
+
+  @OneToMany(() => Machine, (machine) => machine.machineStatus)
+  machine: Machine[];
 
   @CreateDateColumn({
     type: 'timestamptz',
