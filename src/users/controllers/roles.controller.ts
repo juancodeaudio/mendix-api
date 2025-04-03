@@ -17,7 +17,7 @@ export class RolesController {
   @Get(':id')
   @ApiOperation({ summary: 'One role by id' })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this. rolesService.findOne(id);
+    return this.rolesService.findOne(id);
   }
 
   @Post()
@@ -28,13 +28,13 @@ export class RolesController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Update role' })
-  updateRole(@Param('id') id: number, @Body() payload: UpdateRoleDto) {
-    return this.rolesService.updateRole(+id, payload);
+  updateRole(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateRoleDto) {
+    return this.rolesService.updateRole(id, payload);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete role' })
-  removeRole(@Param('id') id: number) {
-    return this.rolesService.removeRole(+id);
+  removeRole(@Param('id', ParseIntPipe) id: number) {
+    return this.rolesService.removeRole(id);
   }
 }

@@ -17,7 +17,7 @@ export class UsersController {
   @Get(':id')
   @ApiOperation({ summary: 'One user by id' })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this. userService.findOne(id);
+    return this.userService.findOne(id);
   }
 
   @Post()
@@ -28,13 +28,13 @@ export class UsersController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Update user' })
-  updateUser(@Param('id') id: number, @Body() payload: UpdateUserDto) {
-    return this.userService.updateUser(+id, payload);
+  updateUser(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateUserDto) {
+    return this.userService.updateUser(id, payload);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete user' })
-  removeUser(@Param('id') id: number) {
-    return this.userService.removeUser(+id);
+  removeUser(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.removeUser(id);
   }
 }

@@ -17,7 +17,7 @@ export class ShiftsController {
   @Get(':id')
   @ApiOperation({ summary: 'One shift by id' })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this. shiftsService.findOne(id);
+    return this.shiftsService.findOne(id);
   }
 
   @Post()
@@ -28,13 +28,13 @@ export class ShiftsController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Update shift' })
-  updateShift(@Param('id') id: number, @Body() payload: UpdateShiftDto) {
-    return this.shiftsService.updateShift(+id, payload);
+  updateShift(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateShiftDto) {
+    return this.shiftsService.updateShift(id, payload);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete shift' })
-  removeShift(@Param('id') id: number) {
-    return this.shiftsService.removeShift(+id);
+  removeShift(@Param('id', ParseIntPipe) id: number) {
+    return this.shiftsService.removeShift(id);
   }
 }
