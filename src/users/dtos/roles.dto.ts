@@ -6,11 +6,6 @@ export class CreateRoleDto {
   @IsNotEmpty()
   @ApiProperty()
   readonly name: string;
-
-  @IsEmail()
-  @IsNotEmpty()
-  @ApiProperty()
-  readonly email: string;
 }
 
 export class UpdateRoleDto extends PartialType(CreateRoleDto) {}
