@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class CreateLocationDto {
@@ -7,7 +7,7 @@ export class CreateLocationDto {
   @ApiProperty()
   readonly name: string;
 
-  @IsEmail()
+  @IsString()
   @IsOptional()
   @ApiProperty()
   readonly description: string;

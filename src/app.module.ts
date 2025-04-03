@@ -31,7 +31,7 @@ import { DatabaseModule } from './database/database.module';
     }),
     UsersModule,
     ShiftsModule,
-    // LocationsModule,
+    LocationsModule,
     // MachinesModule,
     // ProductsModule,
     // WorkOrdersModule,
