@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { User } from '../../users/entities/user.entity';
+import { User } from './user.entity';
 
 @Entity()
 export class Shift {

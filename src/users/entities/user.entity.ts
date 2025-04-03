@@ -6,8 +6,9 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
+
 import { Role } from './role.entity';
-import { Shift } from '../../shifts/entities/shift.entity';
+import { Shift } from './shift.entity';
 
 @Entity()
 export class User {
