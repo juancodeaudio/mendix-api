@@ -28,7 +28,7 @@ export class ShiftsService {
   }
 
   async updateShift(id: number, changes: UpdateShiftDto) {
-    const shift = await this.shiftRepo.findOne({ where: { id } });
+    const shift = await this.shiftRepo.findOneBy({ id });
     if (!shift) {
       throw new NotFoundException(`Shift #${id} not found`);
     }

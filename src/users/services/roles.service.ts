@@ -15,7 +15,10 @@ export class RolesService {
   }
 
   async findOne(id: number) {
-    const role = await this.roleRepo.findOneBy({ id });
+    const role = await this.roleRepo.findOne({
+      where: { id },
+      relations: ['user'],
+    });
     if (!role) {
       throw new NotFoundException(`Role #${id} not found`);
     }
@@ -28,7 +31,7 @@ export class RolesService {
   }
 
   async updateRole(id: number, changes: UpdateRoleDto) {
-    const role = await this.roleRepo.findOne({ where: { id } });
+    const role = await this.roleRepo.findOneBy({ id });
     if (!role) {
       throw new NotFoundException(`Role #${id} not found`);
     }

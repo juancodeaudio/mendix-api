@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+
+import { User } from './user.entity';
 
 @Entity()
 export class Role {
@@ -13,6 +16,9 @@ export class Role {
 
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
+
+  @OneToMany(() => User, (user) => user.role)
+  user: User[];
 
   @CreateDateColumn({
     type: 'timestamptz',

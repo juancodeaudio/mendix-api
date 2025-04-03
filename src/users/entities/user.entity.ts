@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
+import { Role } from './role.entity';
+import { Shift } from '../../shifts/entities/shift.entity';
 
 @Entity()
 export class User {
@@ -22,6 +25,12 @@ export class User {
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
+
+  @ManyToOne(() => Role, (role) => role.user)
+  role: Role;
+
+  @ManyToOne(() => Shift, (shift) => shift.user, { nullable: true })
+  shift: Shift | null;
 
   @CreateDateColumn({
     type: 'timestamptz',
