@@ -6,10 +6,12 @@ import { Role } from './entities/role.entity';
 import { Shift } from 'src/shifts/entities/shift.entity';
 import { UsersController } from './controllers/users.controller';
 import { UsersService } from './services/users.service';
+import { RolesController } from './controllers/roles.controller';
+import { RolesService } from './services/roles.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Role, Shift])],
-  controllers: [UsersController],
-  providers: [UsersService]
+  controllers: [UsersController, RolesController],
+  providers: [UsersService, RolesService]
 })
 export class UsersModule {}
