@@ -21,16 +21,19 @@ export class UsersController {
   }
 
   @Post()
+  @ApiOperation({ summary: 'Create a new user' })
   createUser(@Body() payload: CreateUserDto) {
     return this.userService.createUser(payload);
   }
 
   @Put(':id')
+  @ApiOperation({ summary: 'Update user' })
   updateUser(@Param('id') id: number, @Body() payload: UpdateUserDto) {
     return this.userService.updateUser(+id, payload);
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete user' })
   removeUser(@Param('id') id: number) {
     return this.userService.removeUser(+id);
   }
