@@ -24,7 +24,7 @@ export class Location {
   parentLocation: string;
 
   @OneToMany(() => Machine, (machine) => machine.location)
-  machine: Machine[];
+  machines: Machine[];
 
   @CreateDateColumn({
     type: 'timestamptz',

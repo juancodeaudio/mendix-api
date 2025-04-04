@@ -24,10 +24,10 @@ export class Machine {
   @Column({ type: 'int' })
   levelId: number;
   
-  @ManyToOne(() => MachineStatus, (status) => status.machine)
+  @ManyToOne(() => MachineStatus, (status) => status.machines)
   machineStatus: MachineStatus;
 
-  @ManyToOne(() => Location, (location) => location.machine)
+  @ManyToOne(() => Location, (location) => location.machines)
   location: Location;
 
   @CreateDateColumn({

@@ -18,7 +18,7 @@ export class MachineStatus {
   name: string;
 
   @OneToMany(() => Machine, (machine) => machine.machineStatus)
-  machine: Machine[];
+  machines: Machine[];
 
   @CreateDateColumn({
     type: 'timestamptz',
