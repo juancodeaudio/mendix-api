@@ -6,35 +6,35 @@ import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Get()
   @ApiOperation({ summary: 'List of users' })
   findAll() {
-    return this.userService.findAll();
+    return this.usersService.findAll();
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'One user by id' })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.userService.findOne(id);
+    return this.usersService.findOne(id);
   }
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
   createUser(@Body() payload: CreateUserDto) {
-    return this.userService.createUser(payload);
+    return this.usersService.createUser(payload);
   }
 
   @Put(':id')
   @ApiOperation({ summary: 'Update user' })
   updateUser(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateUserDto) {
-    return this.userService.updateUser(id, payload);
+    return this.usersService.updateUser(id, payload);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete user' })
   removeUser(@Param('id', ParseIntPipe) id: number) {
-    return this.userService.removeUser(id);
+    return this.usersService.removeUser(id);
   }
 }
