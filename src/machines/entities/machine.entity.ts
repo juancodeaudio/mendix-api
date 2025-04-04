@@ -21,8 +21,8 @@ export class Machine {
   @Column({ type: 'varchar', length: 100 })
   type: string;
 
-  @Column({ type: 'varchar', length: 100 })
-  levelId: string;
+  @Column({ type: 'int' })
+  levelId: number;
   
   @ManyToOne(() => MachineStatus, (status) => status.machine)
   machineStatus: MachineStatus;

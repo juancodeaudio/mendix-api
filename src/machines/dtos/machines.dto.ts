@@ -12,10 +12,10 @@ export class CreateMachineDto {
   @ApiProperty()
   readonly type: string;
 
-  @IsString()
+  @IsPositive()
   @IsNotEmpty()
   @ApiProperty()
-  readonly levelId: string;
+  readonly levelId: number;
 
   @IsPositive()
   @IsNotEmpty()
