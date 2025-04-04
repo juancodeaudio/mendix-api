@@ -23,7 +23,7 @@ export class MachinesService {
   async findOne(id: number) {
     const machine = await this.machineRepo.findOne({
       where: { id },
-      relations: ['machineStatus', 'location'],
+      relations: ['machineStatus', 'location', 'workOrders'],
     });
     if (!machine) {
       throw new NotFoundException(`Machine #${id} not found`);

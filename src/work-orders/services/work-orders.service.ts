@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { WorkOrder } from '../entities/work-order.entity';
 import { User } from '../../users/entities/user.entity';
 import { WorkOrderStatus } from '../entities/work-order-status.entity';
+import { Machine } from '../../machines/entities/machine.entity';
 import { CreateWorkOrderDto, UpdateWorkOrderDto } from '../dtos/work-orders.dto';
 
 @Injectable()
@@ -12,6 +13,7 @@ export class WorkOrdersService {
     @InjectRepository(WorkOrder) private workOrderRepo: Repository<WorkOrder>,
     @InjectRepository(User) private userRepo: Repository<User>,
     @InjectRepository(WorkOrderStatus) private workOrderStatusRepo: Repository<WorkOrderStatus>,
+    @InjectRepository(Machine) private machineRepo: Repository<Machine>,
   ) {}
 
   findAll() {
@@ -23,7 +25,7 @@ export class WorkOrdersService {
   async findOne(id: number) {
     const workOrder = await this.workOrderRepo.findOne({
       where: { id },
-      relations: ['user', 'workOrderStatus'],
+      relations: ['user', 'workOrderStatus', 'machines'],
     });
     if (!workOrder) {
       throw new NotFoundException(`Work Order #${id} not found`);
@@ -46,6 +48,14 @@ export class WorkOrdersService {
         throw new NotFoundException(`Work Order Status #${data.workOrderStatusId} not found`);
       }
       newWorkOrder.workOrderStatus = workOrderStatus;
+    }
+    if (data.machinesIds && data.machinesIds.length > 0) {
+      const machines = await this.machineRepo.findBy({ id: In(data.machinesIds) });
+      if (machines.length !== data.machinesIds.length) {
+        const notFoundIds = data.machinesIds.filter((id) => !machines.some((machine) => machine.id === id));
+        throw new NotFoundException(`Some machines not found - Count: ${notFoundIds.length} - Ids: ${notFoundIds.join(', ')}`);
+      }
+      newWorkOrder.machines = machines;
     }
     return this.workOrderRepo.save(newWorkOrder);
   }
@@ -70,6 +80,44 @@ export class WorkOrdersService {
       workOrder.workOrderStatus = workOrderStatus;
     }
     this.workOrderRepo.merge(workOrder, changes);
+    return this.workOrderRepo.save(workOrder);
+  }
+
+  async removeMachineFromWorkOrder(id: number, machineId: number) {
+    const workOrder = await this.workOrderRepo.findOne({
+      where: { id },
+      relations: ['machines'],
+    });
+    if (!workOrder) {
+      throw new NotFoundException(`Work Order #${id} not found`);
+    }
+
+    if (!workOrder.machines.some((machine) => machine.id === machineId)) {
+      throw new NotFoundException(`Machine #${machineId} not found in Work Order #${id}`);
+    }
+
+    workOrder.machines = workOrder.machines.filter((machine) => machine.id !== machineId);
+    return this.workOrderRepo.save(workOrder);
+  }
+
+  async addMachineToWorkOrder(id: number, machineId: number) {
+    const workOrder = await this.workOrderRepo.findOne({
+      where: { id },
+      relations: ['machines'],
+    });
+    if (!workOrder) {
+      throw new NotFoundException(`Work Order #${id} not found`);
+    }
+
+    if (workOrder.machines.some((machine) => machine.id === machineId)) {
+      throw new NotFoundException(`Machine #${machineId} already exists in Work Order #${id}`);
+    }
+    const machine = await this.machineRepo.findOneBy({ id: machineId });
+    if (!machine) {
+      throw new NotFoundException(`Machine #${machineId} not found`);
+    }
+
+    workOrder.machines.push(machine);
     return this.workOrderRepo.save(workOrder);
   }
 

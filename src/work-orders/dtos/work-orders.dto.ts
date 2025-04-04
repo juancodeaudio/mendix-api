@@ -1,4 +1,4 @@
-import { IsDateString, IsNotEmpty, IsPositive } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsPositive, IsArray } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class CreateWorkOrderDto {
@@ -21,6 +21,11 @@ export class CreateWorkOrderDto {
   @IsNotEmpty()
   @ApiProperty()
   readonly workOrderStatusId: number;
+
+  @IsArray()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly machinesIds: number[];
 }
 
 export class UpdateWorkOrderDto extends PartialType(CreateWorkOrderDto) {}

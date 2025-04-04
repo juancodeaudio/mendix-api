@@ -5,10 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  ManyToMany,
 } from 'typeorm';
 
 import { Location } from './location.entity';
 import { MachineStatus } from './machine-status.entity';
+import { WorkOrder } from '../../work-orders/entities/work-order.entity';
 
 @Entity()
 export class Machine {
@@ -29,6 +31,9 @@ export class Machine {
 
   @ManyToOne(() => Location, (location) => location.machines)
   location: Location;
+
+  @ManyToMany(() => WorkOrder, (workOrder) => workOrder.machines)
+  workOrders: WorkOrder[];
 
   @CreateDateColumn({
     type: 'timestamptz',
