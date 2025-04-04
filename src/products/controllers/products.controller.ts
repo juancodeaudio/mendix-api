@@ -32,9 +32,27 @@ export class ProductsController {
     return this.productsService.updateProduct(id, payload);
   }
 
+  @Put(':id/materials/:materialId')
+  @ApiOperation({ summary: 'Add material to product' })
+  addMaterialToProduct(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('materialId', ParseIntPipe) materialId: number
+  ) {
+    return this.productsService.addMaterialToProduct(id, materialId);
+  }
+
   @Delete(':id')
   @ApiOperation({ summary: 'Delete product' })
   removeProduct(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.removeProduct(id);
+  }
+
+  @Delete(':id/materials/:materialId')
+  @ApiOperation({ summary: 'Remove material from product' })
+  removeMaterialFromProduct(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('materialId', ParseIntPipe) materialId: number
+  ) {
+    return this.productsService.removeMaterialFromProduct(id, materialId);
   }
 }

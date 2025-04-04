@@ -4,7 +4,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
+
+import { Material } from './material.entity';
 
 @Entity()
 export class Product {
@@ -19,6 +23,10 @@ export class Product {
 
   @Column({ type: 'varchar', length: 50 })
   code: string;
+
+  @ManyToMany(() => Material, (material) => material.products)
+  @JoinTable()
+  materials: Material[];
 
   @CreateDateColumn({
     type: 'timestamptz',

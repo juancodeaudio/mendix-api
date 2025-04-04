@@ -5,7 +5,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from 'typeorm';
+
+import { Product } from './product.entity';
 
 @Entity()
 export class Material {
@@ -20,6 +23,9 @@ export class Material {
 
   @Column({ type: 'int' })
   stock: number;
+
+  @ManyToMany(() => Product, (product) => product.materials)
+  products: Product[];
 
   @CreateDateColumn({
     type: 'timestamptz',

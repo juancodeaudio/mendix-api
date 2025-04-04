@@ -1,13 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Product } from '../entities/product.entity';
+import { Material } from '../entities/material.entity';
 import { CreateProductDto, UpdateProductDto } from '../dtos/products.dto';
 
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectRepository(Product) private productRepo: Repository<Product>
+    @InjectRepository(Product) private productRepo: Repository<Product>,
+    @InjectRepository(Material) private materialRepo: Repository<Material>
   ) {}
 
   findAll() {
@@ -17,6 +19,7 @@ export class ProductsService {
   async findOne(id: number) {
     const product = await this.productRepo.findOne({
       where: { id },
+      relations: ['materials'],
     });
     if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
@@ -24,8 +27,12 @@ export class ProductsService {
     return product;
   }
 
-  createProduct(data: CreateProductDto) {
+  async createProduct(data: CreateProductDto) {
     const newProduct = this.productRepo.create(data);
+    if (data.materialsIds) {
+      const materials = await this.materialRepo.findBy({ id: In(data.materialsIds) });
+      newProduct.materials = materials;
+    }
     return this.productRepo.save(newProduct);
   }
 
@@ -34,7 +41,49 @@ export class ProductsService {
     if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
     }
+    if (changes.materialsIds) {
+      const materials = await this.materialRepo.findBy({ id: In(changes.materialsIds) });
+      product.materials = materials;
+    }
     this.productRepo.merge(product, changes);
+    return this.productRepo.save(product);
+  }
+
+  async removeMaterialFromProduct(id: number, materialId: number) {
+    const product = await this.productRepo.findOne({
+      where: { id },
+      relations: ['materials'],
+    });
+    if (!product) {
+      throw new NotFoundException(`Product #${id} not found`);
+    }
+    
+    if (!product.materials.some((mat) => mat.id === materialId)) {
+      throw new NotFoundException(`Material #${materialId} not found in Product #${id}`);
+    }
+
+    product.materials = product.materials.filter((mat) => mat.id !== materialId);
+    return this.productRepo.save(product);
+  }
+
+  async addMaterialToProduct(id: number, materialId: number) {
+    const product = await this.productRepo.findOne({
+      where: { id },
+      relations: ['materials'],
+    });
+    if (!product) {
+      throw new NotFoundException(`Product #${id} not found`);
+    }
+
+    if (product.materials.some((mat) => mat.id === materialId)) {
+      throw new NotFoundException(`Material #${materialId} already exists in Product #${id}`);
+    }
+    const material = await this.materialRepo.findOneBy({ id: materialId });
+    if (!material) {
+      throw new NotFoundException(`Material #${materialId} not found`);
+    }
+
+    product.materials.push(material);
     return this.productRepo.save(product);
   }
 

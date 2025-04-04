@@ -17,6 +17,7 @@ export class MaterialsService {
   async findOne(id: number) {
     const material = await this.materialRepo.findOne({
       where: { id },
+      relations: ['products'],
     });
     if (!material) {
       throw new NotFoundException(`Material #${id} not found`);
