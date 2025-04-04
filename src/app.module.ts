@@ -29,7 +29,7 @@ import { DatabaseModule } from './database/database.module';
     }),
     UsersModule,
     MachinesModule,
-    // ProductsModule,
+    ProductsModule,
     // WorkOrdersModule,
     DatabaseModule
   ],
