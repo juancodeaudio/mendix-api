@@ -36,7 +36,7 @@ export class User {
   shift: Shift | null;
 
   @OneToMany(() => WorkOrder, (workOrder) => workOrder.user)
-  workOrder: WorkOrder[];
+  workOrders: WorkOrder[];
 
   @CreateDateColumn({
     type: 'timestamptz',
