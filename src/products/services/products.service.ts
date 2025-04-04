@@ -29,8 +29,14 @@ export class ProductsService {
 
   async createProduct(data: CreateProductDto) {
     const newProduct = this.productRepo.create(data);
-    if (data.materialsIds) {
+    if (data.materialsIds && data.materialsIds.length === 0) {
+      newProduct.materials = [];
+    } else if (data.materialsIds) {
       const materials = await this.materialRepo.findBy({ id: In(data.materialsIds) });
+      if (materials.length !== data.materialsIds.length) {
+        const notFoundIds = data.materialsIds.filter((id) => !materials.some((mat) => mat.id === id));
+        throw new NotFoundException(`Some materials not found - Count: ${notFoundIds.length} - Ids: ${notFoundIds.join(', ')}`);
+      }
       newProduct.materials = materials;
     }
     return this.productRepo.save(newProduct);
