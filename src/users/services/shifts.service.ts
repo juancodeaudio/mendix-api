@@ -17,7 +17,7 @@ export class ShiftsService {
   async findOne(id: number) {
     const shift = await this.shiftRepo.findOne({
       where: { id },
-      relations: ['user'],
+      relations: ['users'],
     });
     if (!shift) {
       throw new NotFoundException(`Shift #${id} not found`);

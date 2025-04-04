@@ -24,7 +24,7 @@ export class Shift {
   endTime: string;
 
   @OneToMany(() => User, (user) => user.role)
-  user: User[];
+  users: User[];
 
   @CreateDateColumn({
     type: 'timestamptz',

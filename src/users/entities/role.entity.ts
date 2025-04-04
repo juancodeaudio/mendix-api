@@ -18,7 +18,7 @@ export class Role {
   name: string;
 
   @OneToMany(() => User, (user) => user.role)
-  user: User[];
+  users: User[];
 
   @CreateDateColumn({
     type: 'timestamptz',

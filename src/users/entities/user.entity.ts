@@ -29,10 +29,10 @@ export class User {
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
 
-  @ManyToOne(() => Role, (role) => role.user)
+  @ManyToOne(() => Role, (role) => role.users)
   role: Role;
 
-  @ManyToOne(() => Shift, (shift) => shift.user, { nullable: true })
+  @ManyToOne(() => Shift, (shift) => shift.users, { nullable: true })
   shift: Shift | null;
 
   @OneToMany(() => WorkOrder, (workOrder) => workOrder.user)
