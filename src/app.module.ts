@@ -30,7 +30,7 @@ import { DatabaseModule } from './database/database.module';
     UsersModule,
     MachinesModule,
     ProductsModule,
-    // WorkOrdersModule,
+    WorkOrdersModule,
     DatabaseModule
   ],
   controllers: [AppController],

@@ -5,10 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 import { Role } from './role.entity';
 import { Shift } from './shift.entity';
+import { WorkOrder } from '../../work-orders/entities/work-order.entity';
 
 @Entity()
 export class User {
@@ -32,6 +34,9 @@ export class User {
 
   @ManyToOne(() => Shift, (shift) => shift.user, { nullable: true })
   shift: Shift | null;
+
+  @OneToMany(() => WorkOrder, (workOrder) => workOrder.user)
+  workOrder: WorkOrder[];
 
   @CreateDateColumn({
     type: 'timestamptz',
