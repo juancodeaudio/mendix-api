@@ -16,6 +16,11 @@ export class CreateWorkOrderDto {
   @IsNotEmpty()
   @ApiProperty()
   userId: number;
+
+  @IsPositive()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly workOrderStatusId: number;
 }
 
 export class UpdateWorkOrderDto extends PartialType(CreateWorkOrderDto) {}
