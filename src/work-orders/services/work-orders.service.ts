@@ -25,7 +25,7 @@ export class WorkOrdersService {
   async findOne(id: number) {
     const workOrder = await this.workOrderRepo.findOne({
       where: { id },
-      relations: ['user', 'workOrderStatus', 'machines'],
+      relations: { user: true, workOrderStatus: true, machines: true, workOrderProducts: { product: true } },
     });
     if (!workOrder) {
       throw new NotFoundException(`Work Order #${id} not found`);

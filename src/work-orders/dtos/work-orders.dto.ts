@@ -15,7 +15,7 @@ export class CreateWorkOrderDto {
   @IsPositive()
   @IsNotEmpty()
   @ApiProperty()
-  userId: number;
+  readonly userId: number;
 
   @IsPositive()
   @IsNotEmpty()

@@ -11,6 +11,7 @@ import { MaterialsService } from './services/materials.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Product, Material])],
   controllers: [ProductsController, MaterialsController],
-  providers: [ProductsService, MaterialsService]
+  providers: [ProductsService, MaterialsService],
+  exports: [TypeOrmModule]
 })
 export class ProductsModule {}

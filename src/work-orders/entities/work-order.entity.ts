@@ -7,11 +7,13 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 
 import { User } from '../../users/entities/user.entity';
 import { WorkOrderStatus } from './work-order-status.entity';
 import { Machine } from '../../machines/entities/machine.entity';
+import { WorkOrderProduct } from './work-order-product.entity';
 
 @Entity()
 export class WorkOrder {
@@ -33,6 +35,9 @@ export class WorkOrder {
   @ManyToMany(() => Machine, (machine) => machine.workOrders)
   @JoinTable()
   machines: Machine[];
+
+  @OneToMany(() => WorkOrderProduct, (workOrderProduct) => workOrderProduct.workOrder)
+  workOrderProducts: WorkOrderProduct[];
 
   @CreateDateColumn({
     type: 'timestamptz',
