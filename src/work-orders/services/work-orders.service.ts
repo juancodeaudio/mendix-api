@@ -5,7 +5,7 @@ import { WorkOrder } from '../entities/work-order.entity';
 import { User } from '../../users/entities/user.entity';
 import { WorkOrderStatus } from '../entities/work-order-status.entity';
 import { Machine } from '../../machines/entities/machine.entity';
-import { CreateWorkOrderDto, UpdateWorkOrderDto } from '../dtos/work-orders.dto';
+import { CreateWorkOrderDto, UpdateWorkOrderDto, WorkOrderQueryDto  } from '../dtos/work-orders.dto';
 
 @Injectable()
 export class WorkOrdersService {
@@ -16,7 +16,14 @@ export class WorkOrdersService {
     @InjectRepository(Machine) private machineRepo: Repository<Machine>,
   ) {}
 
-  findAll() {
+  findAll(params?: WorkOrderQueryDto ) {
+    if (params?.limit && params?.offset) {
+      return this.workOrderRepo.find({
+        relations: ['user', 'workOrderStatus'],
+        take: params.limit,
+        skip: params.offset,
+      });
+    }
     return this.workOrderRepo.find({
       relations: ['user', 'workOrderStatus'],
     });

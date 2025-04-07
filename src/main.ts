@@ -16,7 +16,18 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, documentFactory);
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+      forbidNonWhitelisted: true,
+      skipMissingProperties: false,
+      validationError: { target: false, value: false },
+    })
+  );
 
   app.useGlobalInterceptors(new DatabaseExceptionInterceptor());
 

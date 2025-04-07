@@ -1,5 +1,6 @@
 import { IsDateString, IsNotEmpty, IsPositive, IsArray } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { PaginationQueryDto } from '../../common/dtos/pagination-query.dto';
 
 export class CreateWorkOrderDto {
   @IsDateString()
@@ -29,3 +30,5 @@ export class CreateWorkOrderDto {
 }
 
 export class UpdateWorkOrderDto extends PartialType(CreateWorkOrderDto) {}
+
+export class WorkOrderQueryDto extends PaginationQueryDto {}

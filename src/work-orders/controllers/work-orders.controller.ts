@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 
 import { WorkOrdersService } from '../services/work-orders.service';
-import { CreateWorkOrderDto, UpdateWorkOrderDto } from '../dtos/work-orders.dto';
+import { CreateWorkOrderDto, UpdateWorkOrderDto, WorkOrderQueryDto  } from '../dtos/work-orders.dto';
 
 @Controller('work-orders')
 export class WorkOrdersController {
@@ -10,8 +10,8 @@ export class WorkOrdersController {
 
   @Get()
   @ApiOperation({ summary: 'List of work orders' })
-  findAll() {
-    return this.workOrderService.findAll();
+  findAll(@Query() params: WorkOrderQueryDto ) {
+    return this.workOrderService.findAll(params);
   }
 
   @Get(':id')
