@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { Role } from '../entities/role.entity';
 import { Shift } from '../entities/shift.entity';
-import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
+import { CreateUserDto, UpdateUserDto, UserQueryDto } from '../dtos/users.dto';
 
 @Injectable()
 export class UsersService {
@@ -14,7 +14,14 @@ export class UsersService {
     @InjectRepository(Shift) private shiftsRepo: Repository<Shift>,
   ) {}
 
-  findAll() {
+  findAll(params?: UserQueryDto) {
+    if (params?.limit && params?.offset) {
+      return this.userRepo.find({
+        relations: ['role', 'shift'],
+        take: params.limit,
+        skip: params.offset,
+      });
+    }
     return this.userRepo.find({
       relations: ['role', 'shift'],
     });

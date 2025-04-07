@@ -1,5 +1,6 @@
 import { IsString, IsEmail, IsBoolean, IsNotEmpty, IsPositive, IsOptional } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { PaginationQueryDto } from '../../common/dtos/pagination-query.dto';
 
 export class CreateUserDto {
   @IsString()
@@ -35,3 +36,4 @@ export class CreateUserDto {
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}
 
+export class UserQueryDto extends PaginationQueryDto {}

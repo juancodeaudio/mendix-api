@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 
 import { UsersService } from '../services/users.service';
-import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
+import { CreateUserDto, UpdateUserDto, UserQueryDto } from '../dtos/users.dto';
 
 @Controller('users')
 export class UsersController {
@@ -10,7 +10,7 @@ export class UsersController {
 
   @Get()
   @ApiOperation({ summary: 'List of users' })
-  findAll() {
+  findAll(@Query() params: UserQueryDto) {
     return this.usersService.findAll();
   }
 
