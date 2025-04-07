@@ -8,6 +8,7 @@ import {
   ManyToMany,
   JoinTable,
   OneToMany,
+  Index,
 } from 'typeorm';
 
 import { User } from '../../users/entities/user.entity';
@@ -17,6 +18,7 @@ import { WorkOrderProduct } from './work-order-product.entity';
 import { WorkOrderHistory } from './work-order-history.entity';
 
 @Entity()
+@Index('idx_work_order_status', ['workOrderStatus'])
 export class WorkOrder {
   @PrimaryGeneratedColumn()
   id: number;

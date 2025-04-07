@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   OneToMany,
+  Index,
 } from 'typeorm';
 
 import { Role } from './role.entity';
@@ -13,6 +14,7 @@ import { Shift } from './shift.entity';
 import { WorkOrder } from '../../work-orders/entities/work-order.entity';
 
 @Entity()
+@Index('idx_user_email', ['email'], { unique: true })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

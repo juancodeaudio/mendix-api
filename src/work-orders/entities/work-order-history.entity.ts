@@ -5,12 +5,14 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  Index,
 } from 'typeorm';
 
 import { User } from '../../users/entities/user.entity';
 import { WorkOrder } from './work-order.entity';
 
 @Entity()
+@Index('idx_wo_history_work_order', ['workOrder'])
 export class WorkOrderHistory {
   @PrimaryGeneratedColumn()
   id: number;
