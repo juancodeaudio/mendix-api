@@ -10,7 +10,7 @@ import {
 
 import { Material } from './material.entity';
 
-@Entity()
+@Entity({ name: 'products' })
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,18 +25,28 @@ export class Product {
   code: string;
 
   @ManyToMany(() => Material, (material) => material.products)
-  @JoinTable()
+  @JoinTable({
+    name: 'products_materials',
+    joinColumn: {
+      name: 'product_id'
+    },
+    inverseJoinColumn: {
+      name: 'material_id'
+    },
+  })
   materials: Material[];
 
   @CreateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
+    name: 'created_at',
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
+    name: 'updated_at',
   })
   updatedAt: Date;
 }

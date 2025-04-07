@@ -9,7 +9,7 @@ import {
 
 import { Machine } from './machine.entity';
 
-@Entity()
+@Entity({ name: 'locations' })
 export class Location {
   @PrimaryGeneratedColumn()
   id: number;
@@ -20,7 +20,7 @@ export class Location {
   @Column({ type: 'varchar', length: 255 })
   description: string;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 100, name: 'parent_location' })
   parentLocation: string;
 
   @OneToMany(() => Machine, (machine) => machine.location)
@@ -29,12 +29,14 @@ export class Location {
   @CreateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
+    name: 'created_at',
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
+    name: 'updated_at',
   })
   updatedAt: Date;
 }

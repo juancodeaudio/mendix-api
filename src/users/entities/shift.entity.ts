@@ -9,7 +9,7 @@ import {
 
 import { User } from './user.entity';
 
-@Entity()
+@Entity({ name: 'shifts' })
 export class Shift {
   @PrimaryGeneratedColumn()
   id: number;
@@ -17,10 +17,10 @@ export class Shift {
   @Column({ type: 'varchar', length: 100, unique: true })
   name: string;
 
-  @Column({ type: 'time' })
+  @Column({ type: 'time', name: 'start_time' })
   startTime: string;
 
-  @Column({ type: 'time' })
+  @Column({ type: 'time', name: 'end_time' })
   endTime: string;
 
   @OneToMany(() => User, (user) => user.role)
@@ -29,12 +29,14 @@ export class Shift {
   @CreateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
+    name: 'created_at',
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
+    name: 'updated_at',
   })
   updatedAt: Date;
 }
