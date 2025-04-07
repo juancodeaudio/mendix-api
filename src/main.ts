@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { DatabaseExceptionInterceptor } from './common/interceptors/database-exception.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +17,9 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, documentFactory);
 
   app.useGlobalPipes(new ValidationPipe());
+
+  app.useGlobalInterceptors(new DatabaseExceptionInterceptor());
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
