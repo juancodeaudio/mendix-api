@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 
 import { ProductsService } from '../services/products.service';
-import { CreateProductDto, UpdateProductDto } from '../dtos/products.dto';
+import { CreateProductDto, UpdateProductDto, ProductsQueryDto } from '../dtos/products.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -10,7 +10,7 @@ export class ProductsController {
 
   @Get()
   @ApiOperation({ summary: 'List of products' })
-  findAll() {
+  findAll(@Query() params: ProductsQueryDto) {
     return this.productsService.findAll();
   }
 
