@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 
 import { WorkOrderProductsService } from '../services/work-order-products.service';
@@ -9,19 +9,19 @@ export class WorkOrderProductsController {
   constructor(private readonly workOrderproductsService: WorkOrderProductsService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a new work order' })
+  @ApiOperation({ summary: 'Create a new work order-product relation' })
   createWorkOrderProduct(@Body() payload: CreateWorkOrderProductsDto) {
     return this.workOrderproductsService.createWorkOrderProduct(payload);
   }
 
   @Put(':id')
-  @ApiOperation({ summary: 'Update work order' })
+  @ApiOperation({ summary: 'Update work order-product relation' })
   updateWorkOrderProduct(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateWorkOrderProductsDto) {
     return this.workOrderproductsService.updateWorkOrderProduct(id, payload);
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete work order' })
+  @ApiOperation({ summary: 'Delete work order-product relation' })
   removeWorkOrderProduct(@Param('id', ParseIntPipe) id: number) {
     return this.workOrderproductsService.removeWorkOrderProduct(id);
   }
