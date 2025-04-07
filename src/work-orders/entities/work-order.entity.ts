@@ -14,6 +14,7 @@ import { User } from '../../users/entities/user.entity';
 import { WorkOrderStatus } from './work-order-status.entity';
 import { Machine } from '../../machines/entities/machine.entity';
 import { WorkOrderProduct } from './work-order-product.entity';
+import { WorkOrderHistory } from './work-order-history.entity';
 
 @Entity()
 export class WorkOrder {
@@ -38,6 +39,9 @@ export class WorkOrder {
 
   @OneToMany(() => WorkOrderProduct, (workOrderProduct) => workOrderProduct.workOrder)
   workOrderProducts: WorkOrderProduct[];
+
+  @OneToMany(() => WorkOrderHistory, (workOrderHistory) => workOrderHistory.workOrder)
+  workOrderHistory: WorkOrderHistory[];
 
   @CreateDateColumn({
     type: 'timestamptz',

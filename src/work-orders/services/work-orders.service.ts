@@ -33,6 +33,17 @@ export class WorkOrdersService {
     return workOrder;
   }
 
+  async getWorkOrderHistory(id: number) {
+    const workOrder = await this.workOrderRepo.findOne({
+      where: { id },
+      relations: { workOrderHistory: { user: true } },
+    });
+    if (!workOrder) {
+      throw new NotFoundException(`Work Order #${id} not found`);
+    }
+    return workOrder.workOrderHistory;
+  }
+
   async createWorkOrder(data: CreateWorkOrderDto) {
     const newWorkOrder = this.workOrderRepo.create(data);
     if (data.userId) {

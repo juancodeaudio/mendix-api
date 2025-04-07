@@ -20,6 +20,12 @@ export class WorkOrdersController {
     return this.workOrderService.findOne(id);
   }
 
+  @Get(':id/history')
+  @ApiOperation({ summary: 'Get work order history' })
+  getWorkOrderHistory(@Param('id', ParseIntPipe) id: number) {
+    return this.workOrderService.getWorkOrderHistory(id);
+  }
+
   @Post()
   @ApiOperation({ summary: 'Create a new work order' })
   createWorkOrder(@Body() payload: CreateWorkOrderDto) {
