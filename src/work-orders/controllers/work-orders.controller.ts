@@ -32,9 +32,27 @@ export class WorkOrdersController {
     return this.workOrderService.updateWorkOrder(id, payload);
   }
 
+  @Put(':id/machines/:machineId')
+  @ApiOperation({ summary: 'Add a machine to work order' })
+  addMachineToWorkOrder(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('machineId', ParseIntPipe) machineId: number
+  ) {
+    return this.workOrderService.addMachineToWorkOrder(id, machineId);
+  }
+
   @Delete(':id')
   @ApiOperation({ summary: 'Delete work order' })
   removeWorkOrder(@Param('id', ParseIntPipe) id: number) {
     return this.workOrderService.removeWorkOrder(id);
+  }
+
+  @Delete(':id/machines/:machineId')
+  @ApiOperation({ summary: 'Remove a machine from work order' })
+  removeMachineFromWorkOrder(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('machineId', ParseIntPipe) machineId: number
+  ) {
+    return this.workOrderService.removeMachineFromWorkOrder(id, machineId);
   }
 }
