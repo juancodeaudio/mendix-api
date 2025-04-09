@@ -17,7 +17,6 @@ Está preparada para entornos productivos, con una arquitectura modular y escala
     - [Módulo de Base de Datos (`database`)](#módulo-de-base-de-datos-database)
     - [Módulos de Dominio](#módulos-de-dominio)
   - [Scripts Disponibles](#scripts-disponibles)
-  - [Contribuciones](#contribuciones)
   - [Licencia](#licencia)
 
 ## Características
@@ -96,22 +95,39 @@ Este módulo centraliza la configuración y proveedores de conexión a PostgreSQ
 ## Scripts Disponibles
 
 ```bash
-# Ejecutar migraciones
-npm run migration:run
+# Iniciar la aplicación en modo desarrollo
+npm run start:dev
 
-# Revertir última migración
-npm run migration:revert
+# Compilar la aplicación
+npm run build
 
-# Generar nueva migración
-npm run migration:generate -- -n MigrationName
+# Ejecutar la versión compilada
+npm run start
+
+# Iniciar en modo producción
+npm run start:prod
 
 # Ejecutar pruebas unitarias
 npm run test
+
+# Ejecutar pruebas con cobertura
+npm run test:cov
+
+# Ejecutar pruebas end-to-end
+npm run test:e2e
+
+# Lint del código
+npm run lint
+
+# Ejecutar migraciones pendientes
+npm run migration:run
+
+# Revertir la última migración
+npm run migration:revert
+
+# Generar una nueva migración automáticamente
+npm run migration:generate ./Path/NombreMigracion
 ```
-
-## Contribuciones
-
-¡Las contribuciones son bienvenidas! Por favor abre un Issue o Pull Request para proponer mejoras.
 
 ## Licencia
 
